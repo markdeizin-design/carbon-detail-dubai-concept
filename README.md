@@ -4,6 +4,12 @@ A complete English-language website concept for a **fictional** automotive detai
 
 Four static pages: Home, Services, About, and Contact & Booking. Local photographs and fonts, a silent 30-second hero film, responsive layouts, accessible mobile navigation, service details, reduced-motion support and service-specific WhatsApp enquiry links. The links prepare a message; the visitor sends it, and no booking is automatically confirmed.
 
+## Live website
+
+https://markdeizin-design.github.io/carbon-detail-dubai-concept/
+
+GitHub Pages serves the built site from the root of the `gh-pages` branch. Source files remain on `main`. After editing, rebuild and update the publishing branch with the contents of `dist/`.
+
 ## Run
 
 Requires Node.js 20 or newer. No package installation or runtime dependencies.
