@@ -3,9 +3,18 @@ import { existsSync } from 'node:fs';
 import test from 'node:test';
 import { renderPage } from '../src/render.mjs';
 import { services } from '../src/services.mjs';
+import { whatsappUrl } from '../src/services.mjs';
 
 const pages = ['home', 'services', 'about', 'contact'];
 const pageFiles = new Set(['./', './index.html', './services.html', './about.html', './contact.html']);
+
+test('every page has one accessible floating link to the existing WhatsApp destination', () => {
+  for (const page of pages) {
+    const html = renderPage(page, true);
+    assert.equal((html.match(/class="whatsapp-float"/g) ?? []).length, 1);
+    assert.ok(html.includes(`class="whatsapp-float" href="${whatsappUrl()}" target="_blank" rel="noopener noreferrer" aria-label="Chat with CARBON DETAIL on WhatsApp (opens in a new tab)"`));
+  }
+});
 
 for (const page of pages) {
   test(`${page} renders an English page with valid local links and assets`, () => {
