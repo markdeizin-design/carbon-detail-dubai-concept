@@ -30,3 +30,7 @@ The English interface uses locally hosted Latin-subset variable WOFF2 fonts from
 Font sources: https://github.com/google/fonts/tree/main/ofl/inter and https://github.com/google/fonts/tree/main/ofl/spacegrotesk.
 
 The requested YouTube montage is handled separately; these photographs are not presented as completion of that video requirement.
+
+## Interface texture
+
+`dist/assets/carbon-weave.svg` is an original, code-authored 16 × 16 vector weave, displayed as a 12 px repeating tile. It uses only the interface palette at low opacity and does not require external images or libraries. Photos and video retain their natural colours.

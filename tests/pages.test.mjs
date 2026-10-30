@@ -15,7 +15,8 @@ for (const page of pages) {
     assert.equal((html.match(/<h1\b/g) ?? []).length, 1);
     assert.equal((html.match(/aria-current="page"/g) ?? []).length, 1);
     assert.match(html, /<main id="main">/);
-    for (const [, target] of html.matchAll(/(?:href|src|poster)="([^"]+)"/g)) {
+    for (const [, rawTarget] of html.matchAll(/(?:href|src|poster)="([^"]+)"/g)) {
+      const target = rawTarget.split('?')[0];
       if (target.startsWith('./assets/') || target === './styles.css' || target === './app.mjs') {
         assert.ok(existsSync(new URL(`../dist/${target.slice(2)}`, import.meta.url)), `${page}: missing ${target}`);
       } else if (target.startsWith('#')) {
@@ -32,5 +33,26 @@ for (const page of pages) {
 test('booking choices use the service IDs and advertised names', () => {
   const html = renderPage('contact');
   const options = [...html.matchAll(/<option value="([^"]*)">([^<]+)<\/option>/g)].slice(1);
-  assert.deepEqual(options.map(([, id, label]) => [id, label]), services.map(({ id, name, price }) => [id, `${name} — from AED ${price}`]));
+  assert.deepEqual(options.map(([, id, label]) => [id, label]), services.map(({ id, name }) => [id, name]));
+});
+
+test('home introduces the studio while prices and service details stay on Services', () => {
+  const home = renderPage('home', true);
+  assert.match(home, /Care for the way<br> you drive\./);
+  assert.doesNotMatch(home, /intro-strip|service-card|Book this service|AED/);
+  const servicePage = renderPage('services');
+  for (const service of services) {
+    assert.ok(servicePage.includes(`id="${service.id}"`));
+    assert.ok(servicePage.includes(`AED ${service.price}`));
+  }
+});
+
+test('page actions have text labels without decorative arrow icons', () => {
+  for (const page of pages) {
+    const html = renderPage(page, true);
+    for (const [, content] of html.matchAll(/<a\b[^>]*class="[^"]*\b(?:button|text-link|mobile-book|scroll-cue)\b[^"]*"[^>]*>([\s\S]*?)<\/a>/g)) {
+      assert.doesNotMatch(content, /<svg|[↗→↓]/);
+    }
+    assert.doesNotMatch(html, /M5 12h14|M6 18 18 6/);
+  }
 });
