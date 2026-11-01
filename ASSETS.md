@@ -33,4 +33,4 @@ The requested YouTube montage is handled separately; these photographs are not p
 
 ## Interface texture
 
-`dist/assets/carbon-weave.svg` is an original, code-authored 16 × 16 vector weave, displayed as a 12 px repeating tile. It uses only the interface palette at low opacity and does not require external images or libraries. Photos and video retain their natural colours.
+`dist/assets/carbon-weave.svg` is an original, code-authored 40 × 40 vector twill weave with two-over-two crossings and fine directional fibres, displayed at native size. The single 988-byte SVG uses only the interface palette at low opacity and does not require external images, filters or libraries. Surface opacity is reduced further on phones. Photos and video retain their natural colours.
